@@ -1,0 +1,14 @@
+body{
+    background: #009999 url("../images/Kavala.jpg");
+    background-size: 100%;
+    color: #000;
+    font-size: 12px;
+    line-height: 180%;
+    margin: 10px;
+}
+
+.intro {
+    background-color: beige;
+    opacity: .9;
+    padding: 20px;
+}

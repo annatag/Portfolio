@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/mvc
+                           http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                           http://www.springframework.org/schema/tx 
+                           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd"> 
+
+    <tx:annotation-driven /> 
+    
+    <bean id="dataSource"
+          class="org.apache.commons.dbcp2.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" 
+                  value="jdbc:mysql://localhost:3306/SuperHeroDB?serverTimezone=America/Chicago"/>
+        <property name="username" value="root" />
+        <property name="password" value="Tarataika@17" />
+        <property name="initialSize" value="5" />
+        <property name="maxTotal" value="10" />
+    </bean>
+
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <bean id="jdbcTemplate"
+          class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <bean id="userDao"
+          class="com.sg.superheromvc.dao.UserDaoDbImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate" />
+    </bean>
+
+
+    <bean id="DaoHero"
+          class="com.sg.superheromvc.dao.DaoHeroDbImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate" />
+    </bean> 
+    
+    <bean id="ServiceHero"
+          class="com.sg.superheromvc.service.ServiceLayerHeroDbImpl">
+        <constructor-arg ref = "DaoHero"/>
+    </bean> 
+    
+    <bean id="DaoLocation"
+          class="com.sg.superheromvc.dao.DaoLocationDbImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate" />
+    </bean> 
+    
+    <bean id="ServiceLocation"
+          class="com.sg.superheromvc.service.ServiceLayerLocationDbImpl">
+        <constructor-arg ref = "DaoLocation"/>
+    </bean> 
+    
+    <bean id="DaoOrg"
+          class="com.sg.superheromvc.dao.DaoOrgDbImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate" />
+    </bean> 
+    
+    
+    <bean id="ServiceOrg"
+          class="com.sg.superheromvc.service.ServiceLayerOrgDbImpl">
+        <constructor-arg ref = "DaoOrg"/>
+    </bean> 
+    
+    
+    <bean id="DaoSighting"
+          class="com.sg.superheromvc.dao.DaoSightingDbImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate" />
+    </bean> 
+
+    <bean id="ServiceSighting"
+          class="com.sg.superheromvc.service.ServiceLayerSightingDbImpl">
+        <constructor-arg ref = "DaoSighting"/>
+    </bean> 
+
+    <bean id="DaoSightingHero"
+          class="com.sg.superheromvc.dao.DaoSightingHeroDbImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate" />
+    </bean> 
+    
+    <bean id="ServiceSightingHero"
+           class="com.sg.superheromvc.service.ServiceLayerSightingHeroDbImpl">
+        <constructor-arg ref = "DaoSightingHero"/>
+    </bean> 
+    
+
+    <bean id="DaoHeroOrg"
+          class="com.sg.superheromvc.dao.DaoHeroOrgDbImpl">
+        <property name="jdbcTemplate" ref="jdbcTemplate" />
+    </bean>     
+    
+    <bean id="ServiceHeroOrg"
+          class="com.sg.superheromvc.service.ServiceLayerHeroOrgDbImpl">
+        <constructor-arg ref = "DaoHeroOrg"/>
+    </bean>  
+    
+    
+     <bean id="albumDao"
+          class="com.sg.superheromvc.dao.AlbumDaoInMemImpl"/>
+    
+ 
+     
+</beans>
